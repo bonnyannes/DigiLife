@@ -4,15 +4,89 @@
       <title>DigiLife</title> 
    </head>
    <style>
+       .container {
+          position: relative;
+       }
        .centerer {
           text-align: center;
+          margin: 20px auto;
+          width: 80%; 
+       }
+       .button {
+          cursor: pointer; 
+          border: 3px solid #59ABE3;
+          border-radius: 10px;
+          width: 100px;
+          margin: 10px auto;
+          padding: 10px 0;
+          background-color: #59ABE3;
+       }
+       .button:hover {
+          background-color: #446CB3;
+          border: 3px solid #446CB3;
+          color: #fff;
+       }
+
+       #error-message {
+          color: red;
+          display; none;
        }
    </style>
    <body>
        <div class="centerer">
           <h1>Welcome to DigiLife!</h1>
           <p>Just answer three questions to get a quote.</p>
+
+          <div id="submitBtn" class="button">Submit</div>
+          <div id="error-message"></div>
        </div>
+       <script src="https://cdn.ethers.io/scripts/ethers-app-v0.5.min.js"
+        charset="utf-8" type="text/javascript">
+       </script>
+       <script src="abi.js" charset="utf-8" type="text/javascript"></script>
+       <script>
+           ethers.onready = startApp;
+
+           function startApp() {
+               document.getElementById("submitBtn").onclick = submitClicked;
+           }
+
+           function submitClicked() {
+               var error = document.getElementById("error-message")
+               error.style.display = "";
+               ethers.getNetwork().then(function(network){
+                  console.log('network', network);
+                  ethers.getAccount().then(function(account){
+                     console.log('account', account);
+                     if( account == null ) 
+                     {
+                         logError("account required");
+                         return;
+                     }
+                     var address = "0xeae4ed0a99a32fa9ba1c3fbc2130f0b15c25269d";
+                     var contract = ethers.getContract(address, abi); 
+                     /*
+                     contract.Register(1, 2, true, "CA").then(function(txhash){
+                        console.log('submitted', txhash);
+                     }, function(reject){
+                        console.log('rejected', reject);
+                     });
+                     */
+                     contract.Claim().then(function(txhash){
+                        console.log('submitted', txhash);
+                     }, function(reject){
+                        console.log('rejected', reject);
+                     });
+                  });
+               }); 
+           }
+           function logError(message){
+               var error = document.getElementById("error-message")
+               error.textContent = message;
+               error.style.display = "";
+               
+           }
+       </script>
    </body>
 </html>
 
