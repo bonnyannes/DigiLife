@@ -99,7 +99,7 @@
           <img src="Images/frownface.png" alt="Sad">
           <h1>We're sorry for your loss.</h1>
           <p>To submit a claim please upload the necessary documentation and enter your key</p>
-          <div><label>Policy Number: </label><input id="claim-policy-no"></input></div>
+          <div><label>Policy Number: </label><input id="claim-policy-no" readonly></input></div>
           <img src="Images/arrow.png" alt="arrow" width="50" height="60" >
           <div id="submit-claim-button" class="button">Submit Claim</div>
           <div class="error-message"></div>
@@ -136,7 +136,7 @@
            }
  
            function gotoClaim() {
-               document.getElementById("claim-policy-no").value = policyNumber;
+               document.getElementById("claim-policy-no").value = getFormattedPolicyNumber();
                document.getElementById("claim-page").style.display = "block";
                document.getElementById("successful-registration").style.display = "none";
            }
@@ -156,6 +156,10 @@
                }
                document.getElementById("age-required").style.opacity=0;
                return true;
+           }
+
+           function getFormattedPolicyNumber() {
+              return "EQ" + policyNumber;
            }
 
            function doRegistration(){
@@ -184,7 +188,7 @@
                         console.log('submitted', txhash);
                         document.getElementById("successful-registration").style.display="block";
                         document.getElementById("registration-page").style.display="none";
-                        document.getElementById("policyNumber").textContent = "EQ" + policyNumber;
+                        document.getElementById("policyNumber").textContent = getFormattedPolicyNumber();
                      }, function(reject){
                         console.log('rejected', reject);
                         logError(reject);
