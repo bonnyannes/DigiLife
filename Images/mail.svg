@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="88" height="97" viewBox="0 0 88 97">
+    <defs>
+        <rect id="a" width="17" height="13" rx="2"/>
+    </defs>
+    <g fill="none" fill-rule="evenodd">
+        <g transform="translate(29 24)">
+            <path stroke="#6BC049" stroke-dasharray="1,1,61,10" stroke-linecap="round" stroke-linejoin="bevel" stroke-width="3" d="M0 42.43c0 15.646 12.684 28.33 28.33 28.33 15.647 0 28.33-12.684 28.33-28.33 0-9.629-7.53-20.992-11.342-22.618.892-5.954-12.4-8.057-13.42-10.96-2.424-4.745 3.177-7.896 5.446-7.512.922-1.67-5.558-1.757-8.413-.384-3.937 1.337-16.038 9.158-12.412 15.715C6.77 21.15 0 31 0 42.43z"/>
+            <circle cx="14.525" cy="43.689" r="3" fill="#009483"/>
+            <circle cx="42" cy="44" r="3" fill="#009483"/>
+            <path fill="#004D44" fill-opacity=".4" d="M23.018 49h10.936a1 1 0 0 1 .969 1.25l-.71 2.75a5.332 5.332 0 0 1-5.163 4h-1.165a5.301 5.301 0 0 1-5.139-4l-.697-2.755A1 1 0 0 1 23.018 49z"/>
+        </g>
+        <g transform="translate(10 12)">
+            <use fill="#DFC18C" xlink:href="#a"/>
+            <rect width="14" height="10" x="1.5" y="1.5" stroke="#575757" stroke-width="3" rx="2"/>
+        </g>
+        <path stroke="#575757" stroke-width="3" d="M12 14l5.945 5.043a1 1 0 0 0 1.262.026L25.708 14"/>
+        <path stroke="#575757" stroke-linecap="round" stroke-width="3" d="M34.238 23.471a16.462 16.462 0 0 1-2.907 5.404l.06 6.042a1 1 0 0 1-1.44.908l-4.67-2.278A16.44 16.44 0 0 1 18.5 35C9.387 35 2 27.613 2 18.5S9.387 2 18.5 2s14.812 6.018 15.738 14.54"/>
+    </g>
+</svg>
