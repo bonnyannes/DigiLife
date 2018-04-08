@@ -17,8 +17,8 @@ beforeEach(function() {
 
 });
 
-describe('Minting', function() {
-    it('mints tokens to a call to mint', function() {
+describe('Testing', function() {
+    it('register customer, make a claim, approve the claim', function() {
 
         // Create a connection to the contract as a different user (A)
         var accountA = builder.accounts[1];

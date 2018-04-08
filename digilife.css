@@ -59,3 +59,65 @@ main {
   margin-left:0%;
   margin-right:0%;
 }
+
+.container {
+    position: relative;
+ }
+
+ .centerer {
+    text-align: center;
+    margin: 20px auto;
+    width: 80%;
+ }
+
+ .button {
+    cursor: pointer;
+    border: 3px solid #27AE60;
+    border-radius: 30px;
+    width: 200px;
+    margin: 10px auto;
+    padding: 10px 0;
+    background-color: #27AE60
+    text color: #fff
+ }
+
+ .button:hover {
+    background-color: #003306;
+    border: 3px solid #003306;
+    color: #;
+ }
+
+ .btn-small {
+    width: 100px;
+ }
+
+ .error-message {
+    color: red;
+    display; none;
+ }
+
+ #xregistration-page,
+ #successful-registration,
+ #claim-page,
+ #pending-verification,
+ #claim-approval-confirmation {
+    display: none;
+ }
+
+ .green {
+    color: #27AE60;
+ } 
+
+ input {
+    height: 25px;
+    font-size: 15px;
+ }
+
+ .spacer {
+    padding: 10px 0;
+ }
+ 
+ #age-required { 
+    opacity: 0;
+    font-size: 12px;
+ }
