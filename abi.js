@@ -1,4 +1,4 @@
-[
+var abi = [
 	{
 		"constant": false,
 		"inputs": [
@@ -168,4 +168,4 @@
 		"stateMutability": "view",
 		"type": "function"
 	}
-]
+];
