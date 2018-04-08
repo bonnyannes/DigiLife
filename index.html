@@ -142,15 +142,13 @@
            function generatePolicyNumber() {
                var max = 99999;
                var min = 1;
-               return Math.random() * (max - min) + min;
+               return (parseInt(Math.random() * (max - min) + min));
            }
 
 
            function validateInputs() {
                var age = document.getElementById("age").value;
-               console.log("xx", age);
                if( age == "" ) {
-                  console.log("nxx", age);
                   document.getElementById("age-required").style.opacity=1;
                   return false;
                }
