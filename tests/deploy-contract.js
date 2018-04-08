@@ -1,7 +1,7 @@
 'use strict';
 
 function deploy(builder) {
-    var codes = builder.compile('../DigiLife.sol', true);
+    var codes = builder.compile('./DigiLife.sol', true);
 
     var digiLifeCode = codes.DigiLife;
 

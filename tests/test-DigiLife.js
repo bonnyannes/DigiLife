@@ -31,24 +31,20 @@ describe('Minting', function() {
         var seq = Promise.resolve();
 
         seq = seq.then(function() {
-            return tokenUserA.Register(1, 20, false, "CA", "1234").then(function(txhash) {
+            return tokenUserA.Register(1, 20, false, "CA", 1234, 86).then(function(txhash) {
                 console.log('txhash', txhash);
             });
         });
+
         seq = seq.then(function() {
-            return tokenUserA.GetCustomer(accountA.address).then(function(customer) {
-                console.log('customer', customer);
-            });
-        });
-        seq = seq.then(function() {
-            return tokenUserA.Claim().then(function(txhash) {
+            return tokenUserA.Claim(1234).then(function(txhash) {
                 console.log('claim', txhash);
             }, function(reject){
                 console.log('claim', reject);
             });
         });
         seq = seq.then(function() {
-            return tokenUserA.Approve(accountA.address).then(function(txhash) {
+            return tokenUserA.Approve(1234).then(function(txhash) {
                 console.log('approve', txhash);
             }, function(reject){
                 console.log('approve', reject);
