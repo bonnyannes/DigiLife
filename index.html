@@ -91,7 +91,7 @@
           <img src="Images/smile.png" alt="smile"/>
           <h1>You're almost done!</h1>
           <p>This is your policy number. Please keep it safe, it's very <b>important</b>!</p>
-          <div id="policyNumber">EQ1239</div>
+          <div id="policyNumber"></div>
           <div id="goto-claim-page" class="button">Confirmation</div>
        </div>
 
@@ -160,13 +160,6 @@
            function doRegistration(){
                var error = this.nextElementSibling;
                if( !validateInputs() ) return;
-                     var gender = document.getElementById("gender").value;
-                     var age = document.getElementById("age").value;
-                     var smoking = document.getElementById("smoking").value;
-                     var country = "CA";
-                     policyNumber = generatePolicyNumber();
-                     var risk = 75;
-                     console.log("xx", gender, age, smoking, country, policyNumber, risk);
 
                ethers.getNetwork().then(function(network){
                   console.log('registration network', network);
@@ -178,6 +171,13 @@
                          return;
                      }
                      var contract = ethers.getContract(address, abi);
+                     var gender = document.getElementById("gender").value;
+                     var age = document.getElementById("age").value;
+                     var smoking = document.getElementById("smoking").value;
+                     var country = "CA";
+                     policyNumber = generatePolicyNumber();
+                     var risk = 75;
+                     console.log("registratoin", gender, age, smoking, country, policyNumber, risk);
                      contract.Register(gender, age, smoking, country, policyNumber, risk)
                      .then(function(txhash){
                         console.log('submitted', txhash);
