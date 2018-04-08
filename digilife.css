@@ -54,3 +54,35 @@ main {
   margin-left:0%;
   margin-right:0%;
 }
+
+.container {
+  position: relative;
+}
+
+.centerer {
+  text-align: center;
+  margin: 20px auto;
+  width: 80%;
+}
+
+.button {
+  cursor: pointer;
+  border: 3px solid #59ABE3;
+  border-radius: 10px;
+  width: 100px;
+  margin: 10px auto;
+  padding: 10px 0;
+  background-color: #59ABE3;
+}
+
+.button:hover {
+  background-color: #446CB3;
+  border: 3px solid #446CB3;
+  color: #fff;
+}
+
+#error-message {
+  color: red;
+  display; none;
+}
+
