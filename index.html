@@ -71,7 +71,6 @@
              </select>
           </div>
           <div><label>Country: </label><input id="country"></input></div>
-          <div><label>Risk Rating:</label><input id="riskRating"></div>
           <div id="submit-registration" class="button">Registration</div>
           <div class="error-message"></div>
        </div>
@@ -152,7 +151,7 @@
                      var smoking = document.getElementById("smoking").value;
                      var country = document.getElementById("country").value;
                      policyNumber = generatePolicyNumber();
-                     var risk = document.getElementById("risk-rating").value;
+                     var risk = 75;
                      contract.Register(gender, age, smoking, country, policyNumber, risk)
                      .then(function(txhash){
                         console.log('submitted', txhash);
