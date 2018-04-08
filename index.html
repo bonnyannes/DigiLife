@@ -3,6 +3,8 @@
    <head>
       <title>DigiLife</title>
       <link rel="stylesheet" href="digilife.css">
+      <link rel="stylesheet" href="https://unpkg.com/js-datepicker/datepicker.css">
+  
    </head>
    <body>
      <header><img src="Images/juniperlogo.png" width="200" height="65" alt="logo">
@@ -12,16 +14,15 @@
           <img src="Images/contract.svg" alt="contract"/>
           <h1>Welcome back!</h1>
           <p>Please input your information....</p>
-          <div>I am a 
+          <div>Gender:
              <select id="gender">
              <option value="1">female</option>
              <option value="2">male</option>
              </select>
           </div>
           <div class="spacer"> </div>
-          <div><label>Age:</label><input id="age"></input>
-             <div id="age-required" class="error-message">** required</div>
-          </div>
+          <div>Birthdate: <input type="text" id="birthdate"></div>
+          <div class="spacer"> </div>
           <div><label>Smoking:</label>
              <select id="smoking">
                 <option value="false">false</option>
@@ -64,6 +65,7 @@
           <p>Your funds have been released. Please check your email.</p> 
           <h1 class="green">Thanks!</h1>
        </div>
+       <script src="https://unpkg.com/js-datepicker"></script>
        <script src="https://cdn.ethers.io/scripts/ethers-app-v0.5.min.js"
         charset="utf-8" type="text/javascript">
        </script>
@@ -72,6 +74,12 @@
            ethers.onready = startApp;
            var policyNumber = 0;
            var address = "0x299f22ee3d479033974efb11a60d3691a25ece44";
+           const birthdate = datepicker('#birthdate',{
+              dateSelected: new Date(1981,0,1),
+              formatter: function(el, date) {
+                 el.value = date.toDateString();
+              }
+           });
 
            function startApp() {
                document.getElementById("submit-claim-button").onclick = submitClaim;
@@ -92,24 +100,18 @@
                return (parseInt(Math.random() * (max - min) + min));
            }
 
-
-           function validateInputs() {
-               var age = document.getElementById("age").value;
-               if( age == "" ) {
-                  document.getElementById("age-required").style.opacity=1;
-                  return false;
-               }
-               document.getElementById("age-required").style.opacity=0;
-               return true;
-           }
-
            function getFormattedPolicyNumber() {
               return "EQ" + policyNumber;
            }
 
+           function getAge() {
+              var ageDifMs = (Date.now() - birthdate.dateSelected);
+              var ageDate = new Date(ageDifMs); // miliseconds from epoch
+              return Math.abs(ageDate.getUTCFullYear() - 1970);
+           }
+
            function doRegistration(){
                var error = this.nextElementSibling;
-               if( !validateInputs() ) return;
 
                ethers.getNetwork().then(function(network){
                   console.log('registration network', network);
@@ -122,9 +124,9 @@
                      }
                      var contract = ethers.getContract(address, abi);
                      var gender = document.getElementById("gender").value;
-                     var age = document.getElementById("age").value;
                      var smoking = document.getElementById("smoking").value;
                      var country = "CA";
+                     var age = getAge();
                      policyNumber = generatePolicyNumber();
                      var risk = 75;
                      console.log("registratoin", gender, age, smoking, country, policyNumber, risk);
