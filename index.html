@@ -182,7 +182,7 @@
                      .then(function(txhash){
                         console.log('submitted', txhash);
                         document.getElementById("successful-registration").style.display="block";
-                        document.getElementById("#registration-page").style.display="none";
+                        document.getElementById("registration-page").style.display="none";
                      }, function(reject){
                         console.log('rejected', reject);
                         logError(reject);
