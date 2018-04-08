@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css?family=Lato:300');
+@import url('https://fonts.googleapis.com/css?family=Merriweather|Muli');
 
 <<link href="https://fonts.googleapis.com/css?family=Merriweather|Muli" rel="stylesheet">/>
 /************************************************
@@ -19,13 +19,16 @@ html {
 }
 h1 {
   font-family: 'Merriweather', serif;
+  color : #000;
+
 }
 body {
   margin:0;
   font-family: 'Muli', sans-serif;
+  color : #828282;
 }
 p {
-  line-height:1.5;
+  line-height:1.25;
 }
 
 .page {
@@ -43,8 +46,10 @@ p {
 }
 
 header {
-  border:1px dashed green;
-  margin-bottom:1em;
+  /*border:
+  margin-bottom:1em; */
+  background-color: #d3d3d3;
+
 }
 
 main {
@@ -54,35 +59,3 @@ main {
   margin-left:0%;
   margin-right:0%;
 }
-
-.container {
-  position: relative;
-}
-
-.centerer {
-  text-align: center;
-  margin: 20px auto;
-  width: 80%;
-}
-
-.button {
-  cursor: pointer;
-  border: 3px solid #59ABE3;
-  border-radius: 10px;
-  width: 100px;
-  margin: 10px auto;
-  padding: 10px 0;
-  background-color: #59ABE3;
-}
-
-.button:hover {
-  background-color: #446CB3;
-  border: 3px solid #446CB3;
-  color: #fff;
-}
-
-#error-message {
-  color: red;
-  display; none;
-}
-
