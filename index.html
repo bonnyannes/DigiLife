@@ -92,7 +92,7 @@
           <h1>You're almost done!</h1>
           <p>This is your policy number. Please keep it safe, it's very <b>important</b>!</p>
           <div id="policyNumber">EQ1239</div>
-          <div id="goto-claim-page" class="button btn-small">Confirmation</div>
+          <div id="goto-claim-page" class="button">Confirmation</div>
        </div>
 
        <div id="claim-page" class="centerer">
@@ -183,6 +183,7 @@
                         console.log('submitted', txhash);
                         document.getElementById("successful-registration").style.display="block";
                         document.getElementById("registration-page").style.display="none";
+                        document.getElementById("policyNumber").textContent = "EQ" + policyNumber;
                      }, function(reject){
                         console.log('rejected', reject);
                         logError(reject);
