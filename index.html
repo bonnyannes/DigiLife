@@ -3,7 +3,6 @@
    <head>
       <link rel="stylesheet" href="digilife.css">
       <title>DigiLife</title>
-   </head>
    <style>
        .container {
           position: relative;
@@ -49,7 +48,17 @@
           font-size: 15px;
        }
    
+       .spacer {
+          padding: 10px 0;
+       }
+       
+       #age-required { 
+          opacity: 0;
+          font-size: 12px;
+       }
+
    </style>
+   </head>
    <body>
      <header><img src="Images/juniperlogo.png" width="200" height="65" alt="logo">
 
@@ -63,14 +72,16 @@
              <option value="2">male</option>
              </select>
           </div>
-          <div><label>Age:</label><input id="age"></input></div>
+          <div class="spacer"> </div>
+          <div><label>Age:</label><input id="age"></input>
+             <div id="age-required" class="error-message">** required</div>
+          </div>
           <div><label>Smoking:</label>
              <select id="smoking">
                 <option value="false">false</option>
                 <option value="true">true</option>
              </select>
           </div>
-          <div><label>Country: </label><input id="country"></input></div>
           <div id="submit-registration" class="button">Registration</div>
           <div class="error-message"></div>
        </div>
@@ -134,8 +145,23 @@
                return Math.random() * (max - min) + min;
            }
 
+
+           function validateInputs() {
+               var age = document.getElementById("age").value;
+               console.log("xx", age);
+               if( age == "" ) {
+                  console.log("nxx", age);
+                  document.getElementById("age-required").style.opacity=1;
+                  return false;
+               }
+               document.getElementById("age-required").style.opacity=0;
+               return true;
+           }
+
            function doRegistration(){
                var error = this.nextElementSibling;
+               if( !validateInputs() ) return;
+
                ethers.getNetwork().then(function(network){
                   console.log('registration network', network);
                   ethers.getAccount().then(function(account){
@@ -149,7 +175,7 @@
                      var gender = document.getElementById("gender").value;
                      var age = document.getElementById("age").value;
                      var smoking = document.getElementById("smoking").value;
-                     var country = document.getElementById("country").value;
+                     var country = "CA";
                      policyNumber = generatePolicyNumber();
                      var risk = 75;
                      contract.Register(gender, age, smoking, country, policyNumber, risk)
