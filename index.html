@@ -28,24 +28,85 @@
           border: 3px solid #003306;
           color: #;
        }
+       .btn-small {
+          width: 100px;
+       }
 
-       #error-message {
+       .error-message {
           color: red;
           display; none;
        }
+       #xregistration-page,#successful-registration,
+       #claim-page,#pending-verification,
+       #claim-approval-confirmation {
+          display: none;
+       }
+       .green {
+          color: #27AE60;
+       } 
+       input {
+          height: 25px;
+          font-size: 15px;
+       }
+   
    </style>
    <body>
      <header><img src="Images/juniperlogo.png" width="200" height="65" alt="logo">
 
      </header>
+       <div id="registration-page" class="centerer">
+          <img src="Images/contract.svg" alt="contract"/>
+          <h1>Welcome back!</h1>
+          <p>Please input your information....</p>
+          <div id="gender">I am a <select>
+             <option value="1">female</option>
+             <option value="2">male</option>
+             </select>
+          </div>
+          <div><label>Age:</label><input id="age"></input></div>
+          <div><label>Smoking:</label>
+             <select id="smoking">
+                <option value="false">false</option>
+                <option value="true">true</option>
+             </select>
+          </div>
+          <div><label>Country: </label><input id="country"></input></div>
+          <div><label>Risk Rating:</label><input id="riskRating"></div>
+          <div id="submit-registration" class="button">Registration</div>
+          <div class="error-message"></div>
+       </div>
 
-       <div class="centerer">
+       <div id="successful-registration" class="centerer">
+          <img src="Images/smile.png" alt="smile"/>
+          <h1>You're almost done!</h1>
+          <p>This is your policy number. Please keep it safe, it's very <b>important</b>!</p>
+          <div id="policyNumber">EQ1239</div>
+          <div id="goto-claim-page" class="button btn-small">Confirmation</div>
+       </div>
+
+       <div id="claim-page" class="centerer">
           <img src="Images/frownface.png" alt="Sad">
           <h1>We're sorry for your loss.</h1>
           <p>To submit a claim please upload the necessary documentation and enter your key</p>
+          <div><label>Policy Number: </label><input id="claim-policy-no"></input></div>
           <img src="Images/arrow.png" alt="arrow" width="50" height="60" >
-          <div id="submitBtn" class="button">Submit Claim</div>
-          <div id="error-message"></div>
+          <div id="submit-claim-button" class="button">Submit Claim</div>
+          <div class="error-message"></div>
+       </div>
+       <div id="pending-verification" class="centerer">
+          <img src="Images/mail.png" alt="mail"/>
+          <h1>Pending Registration...</h1>
+          <p>Your claim is being processed. There is a 30 day verification period before funds will be released into your account.</p>
+          <img src="Images/checklist.png" alt="checklist"/>
+          <div id="next-button" class="button btn-small">Next</div>
+          
+       </div>
+       <div id="claim-approval-confirmation" class="centerer">
+          <img src="Images/umbrella.png" alt="mail"/>
+          <h1>Your claim has been confirmed!</h1>
+          <img src="Images/checkmark.png" alt="checkmark"/>
+          <p>Your funds have been released. Please check your email.</p> 
+          <h1 class="green">Thanks!</h1>
        </div>
        <script src="https://cdn.ethers.io/scripts/ethers-app-v0.5.min.js"
         charset="utf-8" type="text/javascript">
@@ -53,14 +114,64 @@
        <script src="abi.js" charset="utf-8" type="text/javascript"></script>
        <script>
            ethers.onready = startApp;
+           var policyNumber = 0;
+           var address = "0x299f22ee3d479033974efb11a60d3691a25ece44";
 
            function startApp() {
-               document.getElementById("submitBtn").onclick = submitClicked;
+               document.getElementById("submit-claim-button").onclick = submitClaim;
+               document.getElementById("next-button").onclick = nextClicked;
+               document.getElementById("submit-registration").onclick = doRegistration;
+               document.getElementById("goto-claim-page").onclick = gotoClaim;
+           }
+ 
+           function gotoClaim() {
+               document.getElementById("claim-page").style.display = "block";
+               document.getElementById("successful-registration").style.display = "none";
            }
 
-           function submitClicked() {
-               var error = document.getElementById("error-message")
-               error.style.display = "";
+           function generatePolicyNumber() {
+               var max = 99999;
+               var min = 1;
+               return Math.random() * (max - min) + min;
+           }
+
+           function doRegistration(){
+               var error = this.nextElementSibling;
+               ethers.getNetwork().then(function(network){
+                  console.log('registration network', network);
+                  ethers.getAccount().then(function(account){
+                     console.log('account', account);
+                     if( account == null )
+                     {
+                         logError(error, "account required");
+                         return;
+                     }
+                     var contract = ethers.getContract(address, abi);
+                     var gender = document.getElementById("gender").value;
+                     var age = document.getElementById("age").value;
+                     var smoking = document.getElementById("smoking").value;
+                     var country = document.getElementById("country").value;
+                     policyNumber = generatePolicyNumber();
+                     var risk = document.getElementById("risk-rating").value;
+                     contract.Register(gender, age, smoking, country, policyNumber, risk)
+                     .then(function(txhash){
+                        console.log('submitted', txhash);
+                        document.getElementById("successful-registration").style.display="block";
+                        document.getElementById("#registration-page").style.display="none";
+                     }, function(reject){
+                        console.log('rejected', reject);
+                        logError(reject);
+                     });
+                  });
+               });
+           }
+
+           function nextClicked() {
+               document.getElementById("claim-approval-confirmation").style.display = "block";
+               document.getElementById("pending-verification").style.display = "none";
+           }
+
+           function submitClaim() {
                ethers.getNetwork().then(function(network){
                   console.log('network', network);
                   ethers.getAccount().then(function(account){
@@ -70,26 +181,18 @@
                          logError("account required");
                          return;
                      }
-                     var address = "0x299f22ee3d479033974efb11a60d3691a25ece44";
                      var contract = ethers.getContract(address, abi);
-                     /*
-                     contract.Register(1, 2, true, "CA").then(function(txhash){
-                        console.log('submitted', txhash);
-                     }, function(reject){
-                        console.log('rejected', reject);
-                     });
-                     */
-                     var policyNumber = 12345;
                      contract.Claim(policyNumber).then(function(txhash){
                         console.log('submitted', txhash);
+                        document.getElementById("pending-verification").style.display="block";
+                        document.getElementById("claim-page").style.display="none";
                      }, function(reject){
                         console.log('rejected', reject);
                      });
                   });
                });
            }
-           function logError(message){
-               var error = document.getElementById("error-message")
+           function logError(error, message){
                error.textContent = message;
                error.style.display = "";
 
