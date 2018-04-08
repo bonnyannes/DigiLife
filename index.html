@@ -178,6 +178,7 @@
                      var country = "CA";
                      policyNumber = generatePolicyNumber();
                      var risk = 75;
+                     console.log("xx",  policyNumber, risk, age);
                      contract.Register(gender, age, smoking, country, policyNumber, risk)
                      .then(function(txhash){
                         console.log('submitted', txhash);
