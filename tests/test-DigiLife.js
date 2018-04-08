@@ -44,7 +44,7 @@ describe('Minting', function() {
             });
         });
         seq = seq.then(function() {
-            return tokenUserA.Approve(1234).then(function(txhash) {
+            return tokenUserA.Approved(1234).then(function(txhash) {
                 console.log('approve', txhash);
             }, function(reject){
                 console.log('approve', reject);

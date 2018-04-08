@@ -28,10 +28,11 @@ contract DigiLife {
     enum States { Inactive, Active, Pending, Approved, Locked }
 
     function Register(uint8 gender, uint8 age, bool smoker, string country, uint policyNumber, uint riskRating) public {
-        require(customers[id].state == States.Inactive);
+        
+        require( policyToCustomer[policyNumber] == address(0));
         uint32 start = uint32(now);
         uint32 end = uint32(now + contractPeriod);
-        uint id = customers.push(Customer(gender, age, smoker, country, States.Active, start, end, policyNumber, riskRating)) - 1;
+        uint id = customers.push(Customer(gender, age, smoker, country, States.Active, start, end, policyNumber, riskRating))-1;
         policyToCustomer[id] = msg.sender;
         policyToCustomerIndex[policyNumber] = id;
 
