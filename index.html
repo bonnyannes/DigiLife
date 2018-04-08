@@ -1,16 +1,50 @@
 <!DOCTYPE html>
 <html>
    <head>
-      <title>DigiLife</title> 
-      <link rel="stylesheet" type="text/css" href="digilife.css">
+      <link rel="stylesheet" href="digilife.css">
+      <title>DigiLife</title>
    </head>
-   <body>
-       <div class="centerer">
-          <img src="frownface.png" alt="Sad">
+   <style>
+       .container {
+          position: relative;
+       }
+       .centerer {
+          text-align: center;
+          margin: 20px auto;
+          width: 80%;
+       }
+       .button {
+          cursor: pointer;
+          border: 3px solid #27AE60;
+          border-radius: 30px;
+          width: 200px;
+          margin: 10px auto;
+          padding: 10px 0;
+          background-color: #27AE60
+          text color: #fff
+       }
+       .button:hover {
+          background-color: #003306;
+          border: 3px solid #003306;
+          color: #;
+       }
 
+       #error-message {
+          color: red;
+          display; none;
+       }
+   </style>
+   <body>
+     <header><img src="images/juniperlogo.png" width="200" height="65" alt="logo">
+
+     </header>
+
+       <div class="centerer">
+          <img src="images/frownface.png" alt="Sad">
           <h1>We're sorry for your loss.</h1>
-          <p>To submit a claim please upload the necessary documentarion and enter your private key.</p>
-          <div id="submitBtn" class="button">Submit</div>
+          <p>To submit a claim please upload the necessary documentation and enter your key</p>
+          <img src="images/arrow.png" alt="arrow" width="50" height="60" >
+          <div id="submitBtn" class="button">Submit Claim</div>
           <div id="error-message"></div>
        </div>
        <script src="https://cdn.ethers.io/scripts/ethers-app-v0.5.min.js"
@@ -31,13 +65,13 @@
                   console.log('network', network);
                   ethers.getAccount().then(function(account){
                      console.log('account', account);
-                     if( account == null ) 
+                     if( account == null )
                      {
                          logError("account required");
                          return;
                      }
                      var address = "0xeae4ed0a99a32fa9ba1c3fbc2130f0b15c25269d";
-                     var contract = ethers.getContract(address, abi); 
+                     var contract = ethers.getContract(address, abi);
                      /*
                      contract.Register(1, 2, true, "CA").then(function(txhash){
                         console.log('submitted', txhash);
@@ -51,15 +85,14 @@
                         console.log('rejected', reject);
                      });
                   });
-               }); 
+               });
            }
            function logError(message){
                var error = document.getElementById("error-message")
                error.textContent = message;
                error.style.display = "";
-               
+
            }
        </script>
    </body>
 </html>
-
