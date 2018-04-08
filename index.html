@@ -67,7 +67,8 @@
           <img src="Images/contract.svg" alt="contract"/>
           <h1>Welcome back!</h1>
           <p>Please input your information....</p>
-          <div id="gender">I am a <select>
+          <div>I am a 
+             <select id="gender">
              <option value="1">female</option>
              <option value="2">male</option>
              </select>
@@ -159,6 +160,13 @@
            function doRegistration(){
                var error = this.nextElementSibling;
                if( !validateInputs() ) return;
+                     var gender = document.getElementById("gender").value;
+                     var age = document.getElementById("age").value;
+                     var smoking = document.getElementById("smoking").value;
+                     var country = "CA";
+                     policyNumber = generatePolicyNumber();
+                     var risk = 75;
+                     console.log("xx", gender, age, smoking, country, policyNumber, risk);
 
                ethers.getNetwork().then(function(network){
                   console.log('registration network', network);
@@ -170,13 +178,6 @@
                          return;
                      }
                      var contract = ethers.getContract(address, abi);
-                     var gender = document.getElementById("gender").value;
-                     var age = document.getElementById("age").value;
-                     var smoking = document.getElementById("smoking").value;
-                     var country = "CA";
-                     policyNumber = generatePolicyNumber();
-                     var risk = 75;
-                     console.log("xx",  policyNumber, risk, age);
                      contract.Register(gender, age, smoking, country, policyNumber, risk)
                      .then(function(txhash){
                         console.log('submitted', txhash);
