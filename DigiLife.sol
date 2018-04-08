@@ -1,50 +1,65 @@
-pragma solidity ^0.4.0;
+pragma solidity ^0.4.21;
 contract DigiLife {
+
+    event NewClient(uint id, uint policyNumber, uint riskRating, uint32 start, uint32 end);
+    event NewClaim(uint policyNumber);
+    event ClaimApproval(uint policyNumber);
+
     struct Customer {
         uint8 gender;
         uint8 age;
-        bool smoke;
+        bool smoker;
         string country;
         States state;
-        uint start;
-        uint end;
-    }
-    mapping(address => Customer) customers;
-    mapping(address => Customer) claims;
-    
-    uint contractPeriod = 10 years;
-    uint claimPeriod = 30 days;
-    enum States { Inactive, Active, Pending, Confirmed } 
-    
-    function Register(uint8 gender, uint8 age, bool smoke, string country) public {
-        Customer storage customer = customers[msg.sender];
-        require(customer.state == States.Inactive);
-        customer.gender = gender;
-        customer.age = age;
-        customer.smoke = smoke;
-        customer.country = country;
-        customer.state = States.Active;
-        customer.start = now;
-        customer.end = now + contractPeriod;
-    }
-    
-    function Claim() public {
-        Customer storage customer = customers[msg.sender];
-        
-        require(customer.state == States.Active);
-        require(claims[msg.sender].state == States.Inactive);
-        
-        customer.state = States.Pending;
-        
-        claims[msg.sender] = customer;
-        Customer storage claim = claims[msg.sender];
-        claim.start = now;
-        claim.end = now + claimPeriod;
-    }
-    
-    function Approved() public {
-        
+        uint32 start;
+        uint32 end;
+        uint policyNumber;
+        uint riskRating;
+
     }
 
-    
+    Customer[] public customers;
+
+    mapping (uint => address) policyToCustomer;
+    mapping (uint => uint) policyToCustomerIndex;
+
+    uint contractPeriod = 10 years;
+    uint claimPeriod = 30 days;
+    enum States { Inactive, Active, Pending, Approved, Locked }
+
+    function Register(uint8 gender, uint8 age, bool smoker, string country, uint policyNumber, uint riskRating) public {
+        
+        require( policyToCustomer[policyNumber] == address(0));
+        uint32 start = uint32(now);
+        uint32 end = uint32(now + contractPeriod);
+        uint id = customers.push(Customer(gender, age, smoker, country, States.Active, start, end, policyNumber, riskRating))-1;
+        policyToCustomer[id] = msg.sender;
+        policyToCustomerIndex[policyNumber] = id;
+
+        emit NewClient(id, policyNumber, riskRating, start, end);
+
+    }
+
+    function Claim(uint policyNumber) public {
+        uint customerIndex = policyToCustomerIndex[policyNumber];
+        Customer storage customer = customers[customerIndex];
+        require(customer.state == States.Active);
+        customer.state = States.Pending;
+
+        emit NewClaim(policyNumber);
+
+    }
+
+    function Approved(uint policyNumber) public {
+        uint customerIndex = policyToCustomerIndex[policyNumber];
+        Customer storage customer = customers[customerIndex];
+        require(customer.state == States.Pending);
+        customer.state = States.Approved;
+
+        emit ClaimApproval(policyNumber);
+
+    }
+
+
 }
+

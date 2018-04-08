@@ -70,7 +70,7 @@
                          logError("account required");
                          return;
                      }
-                     var address = "0xeae4ed0a99a32fa9ba1c3fbc2130f0b15c25269d";
+                     var address = "0x299f22ee3d479033974efb11a60d3691a25ece44";
                      var contract = ethers.getContract(address, abi);
                      /*
                      contract.Register(1, 2, true, "CA").then(function(txhash){
@@ -79,7 +79,8 @@
                         console.log('rejected', reject);
                      });
                      */
-                     contract.Claim().then(function(txhash){
+                     var policyNumber = 12345;
+                     contract.Claim(policyNumber).then(function(txhash){
                         console.log('submitted', txhash);
                      }, function(reject){
                         console.log('rejected', reject);
